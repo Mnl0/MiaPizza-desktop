@@ -1,0 +1,47 @@
+﻿<Window x:Class="Tienda.Vista.ModificarCategoria"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tienda.Vista"
+        mc:Ignorable="d"
+        Title="Modificar Categoria" Height="446.292" Width="680.862" MaxWidth="680" MaxHeight="446" MinWidth="680" MinHeight="446">
+    <Grid Background="#FFEEEEEE">
+        <Label Content="Modificar Categoria" HorizontalAlignment="Left" Margin="200,20,0,0" VerticalAlignment="Top" FontSize="24"/>
+        
+        <Label Content="Nombre Categoria" HorizontalAlignment="Left" Margin="83,92,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox x:Name="txt_nombre_c" HorizontalAlignment="Left" Height="30" Margin="83,131,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="490" FontSize="16" RenderTransformOrigin="0.5,0.5" MaxLength="50" MaxLines="1" BorderThickness="0,0,1,2">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="9"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <Label Content="Descripcion" HorizontalAlignment="Left" Margin="83,177,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox x:Name="txt_descripcion_c" HorizontalAlignment="Left" Height="67" Margin="83,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="490" FontSize="16" MaxLines="4" MaxLength="50" BorderThickness="0,0,1,2">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="9"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+
+        <Button x:Name="btn_modificar" Content="Modificar" HorizontalAlignment="Left" Margin="83,311,0,0" VerticalAlignment="Top" Width="114" Click="btn_modificar_Click" Height="30" FontSize="18" BorderBrush="#FF707070" Background="#FF5AB8E9" BorderThickness="0,0,1,2">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="btn_cancelar" Content="Cancelar" HorizontalAlignment="Left" Margin="237,311,0,0" VerticalAlignment="Top" Width="116" Click="btn_cancelar_Click" Height="30" FontSize="18" Background="#FF84C6ED" BorderThickness="0,0,1,2">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>
+</Window>

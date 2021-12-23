@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TiendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Carro_Compra">
+          <Key>
+            <PropertyRef Name="id_carro_compra" />
+          </Key>
+          <Property Name="id_carro_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cliente" Type="int" />
+          <Property Name="id_producto" Type="int" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="codigo_carro" Type="int" />
+          <Property Name="valor_unitario" Type="int" />
+          <Property Name="sub_total" Type="int" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_categoria" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion_categoria" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_cliente" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="apellido_cliente" Type="varchar" MaxLength="25" />
+          <Property Name="calle_cliente" Type="varchar" MaxLength="25" />
+          <Property Name="numero_calle" Type="varchar" MaxLength="25" />
+          <Property Name="telefono_cliente" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="id_pedido" />
+          </Key>
+          <Property Name="id_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_carro_compra" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="codigo_carro" Type="int" Nullable="false" />
+          <Property Name="total_precio" Type="int" Nullable="false" />
+          <Property Name="hora" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_categoria" Type="int" Nullable="false" />
+          <Property Name="precio_producto" Type="int" Nullable="false" />
+          <Property Name="nombre_producto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion_producto" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Carro_Compra_Cliente2">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Carro_Compra" Type="Self.Carro_Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Carro_Compra">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carro_Compra_Producto1">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Carro_Compra" Type="Self.Carro_Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="Carro_Compra">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Carro_Compra1">
+          <End Role="Carro_Compra" Type="Self.Carro_Compra" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carro_Compra">
+              <PropertyRef Name="id_carro_compra" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="id_carro_compra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TiendaModelStoreContainer">
+          <EntitySet Name="Carro_Compra" EntityType="Self.Carro_Compra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Carro_Compra_Cliente2" Association="Self.FK_Carro_Compra_Cliente2">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carro_Compra_Producto1" Association="Self.FK_Carro_Compra_Producto1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Carro_Compra1" Association="Self.FK_Pedido_Carro_Compra1">
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TiendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TiendaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carro_Compra" EntityType="TiendaModel.Carro_Compra" />
+          <EntitySet Name="Categoria" EntityType="TiendaModel.Categoria" />
+          <EntitySet Name="Cliente" EntityType="TiendaModel.Cliente" />
+          <EntitySet Name="Pedido" EntityType="TiendaModel.Pedido" />
+          <EntitySet Name="Producto" EntityType="TiendaModel.Producto" />
+          <EntitySet Name="sysdiagrams" EntityType="TiendaModel.sysdiagrams" />
+          <AssociationSet Name="FK_Carro_Compra_Cliente2" Association="TiendaModel.FK_Carro_Compra_Cliente2">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Carro_Compra_Producto1" Association="TiendaModel.FK_Carro_Compra_Producto1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Carro_Compra1" Association="TiendaModel.FK_Pedido_Carro_Compra1">
+            <End Role="Carro_Compra" EntitySet="Carro_Compra" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producto_Categoria" Association="TiendaModel.FK_Producto_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Carro_Compra">
+          <Key>
+            <PropertyRef Name="id_carro_compra" />
+          </Key>
+          <Property Name="id_carro_compra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cliente" Type="Int32" />
+          <Property Name="id_producto" Type="Int32" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="codigo_carro" Type="Int32" />
+          <Property Name="valor_unitario" Type="Int32" />
+          <Property Name="sub_total" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="TiendaModel.FK_Carro_Compra_Cliente2" FromRole="Carro_Compra" ToRole="Cliente" />
+          <NavigationProperty Name="Producto" Relationship="TiendaModel.FK_Carro_Compra_Producto1" FromRole="Carro_Compra" ToRole="Producto" />
+          <NavigationProperty Name="Pedido" Relationship="TiendaModel.FK_Pedido_Carro_Compra1" FromRole="Carro_Compra" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_categoria" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="TiendaModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_cliente" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="apellido_cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="calle_cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="numero_calle" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="telefono_cliente" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carro_Compra" Relationship="TiendaModel.FK_Carro_Compra_Cliente2" FromRole="Cliente" ToRole="Carro_Compra" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="id_pedido" />
+          </Key>
+          <Property Name="id_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_carro_compra" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_carro" Type="Int32" Nullable="false" />
+          <Property Name="total_precio" Type="Int32" Nullable="false" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carro_Compra" Relationship="TiendaModel.FK_Pedido_Carro_Compra1" FromRole="Pedido" ToRole="Carro_Compra" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_categoria" Type="Int32" Nullable="false" />
+          <Property Name="precio_producto" Type="Int32" Nullable="false" />
+          <Property Name="nombre_producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carro_Compra" Relationship="TiendaModel.FK_Carro_Compra_Producto1" FromRole="Producto" ToRole="Carro_Compra" />
+          <NavigationProperty Name="Categoria" Relationship="TiendaModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Carro_Compra_Cliente2">
+          <End Type="TiendaModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="TiendaModel.Carro_Compra" Role="Carro_Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Carro_Compra">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Carro_Compra_Producto1">
+          <End Type="TiendaModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="TiendaModel.Carro_Compra" Role="Carro_Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="Carro_Compra">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Carro_Compra1">
+          <End Type="TiendaModel.Carro_Compra" Role="Carro_Compra" Multiplicity="1" />
+          <End Type="TiendaModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carro_Compra">
+              <PropertyRef Name="id_carro_compra" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="id_carro_compra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producto_Categoria">
+          <End Type="TiendaModel.Categoria" Role="Categoria" Multiplicity="1" />
+          <End Type="TiendaModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TiendaModelStoreContainer" CdmEntityContainer="TiendaEntities">
+          <EntitySetMapping Name="Carro_Compra">
+            <EntityTypeMapping TypeName="TiendaModel.Carro_Compra">
+              <MappingFragment StoreEntitySet="Carro_Compra">
+                <ScalarProperty Name="sub_total" ColumnName="sub_total" />
+                <ScalarProperty Name="valor_unitario" ColumnName="valor_unitario" />
+                <ScalarProperty Name="codigo_carro" ColumnName="codigo_carro" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="id_carro_compra" ColumnName="id_carro_compra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="TiendaModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="descripcion_categoria" ColumnName="descripcion_categoria" />
+                <ScalarProperty Name="nombre_categoria" ColumnName="nombre_categoria" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="TiendaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="telefono_cliente" ColumnName="telefono_cliente" />
+                <ScalarProperty Name="numero_calle" ColumnName="numero_calle" />
+                <ScalarProperty Name="calle_cliente" ColumnName="calle_cliente" />
+                <ScalarProperty Name="apellido_cliente" ColumnName="apellido_cliente" />
+                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="TiendaModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="total_precio" ColumnName="total_precio" />
+                <ScalarProperty Name="codigo_carro" ColumnName="codigo_carro" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id_carro_compra" ColumnName="id_carro_compra" />
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="TiendaModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="descripcion_producto" ColumnName="descripcion_producto" />
+                <ScalarProperty Name="nombre_producto" ColumnName="nombre_producto" />
+                <ScalarProperty Name="precio_producto" ColumnName="precio_producto" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TiendaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
